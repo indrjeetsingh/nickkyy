@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memory Lane</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ffcee6, #ffd6f1, #e4f9ff);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 2rem;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .header h1 {
+      font-family: "Pacifico", cursive;
+      color: #ff4e91;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .header p {
+      background: rgba(255,255,255,0.6);
+      padding: 1rem;
+      border-radius: 15px;
+      color: #7a3c8f;
+    }
+
+    .controls {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border-radius: 25px;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      background: linear-gradient(45deg, #ff6ec4, #7873f5);
+      margin: 0 0.5rem;
+      font-size: 1rem;
+    }
+
+    .gallery {
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+      scroll-behavior: smooth;
+    }
+
+    .gallery::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .gallery::-webkit-scrollbar-thumb {
+      background: #ff6ec4;
+      border-radius: 10px;
+    }
+
+    .memory-card {
+      flex: 0 0 auto;
+      width: 280px;
+      height: 380px;
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      transform: rotate(var(--rotate));
+      box-shadow: 0 10px 25px rgba(255,105,180,0.3);
+    }
+
+    .memory-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .memory-caption {
+      position: absolute;
+      bottom: -100%;
+      left: 0;
+      width: 100%;
+      padding: 1rem;
+      background: rgba(255,105,180,0.9);
+      color: #fff;
+      transition: 0.4s;
+      text-align: center;
+    }
+
+    .memory-card:hover .memory-caption {
+      bottom: 0;
+    }
+
+    .sticker {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      font-size: 1.8rem;
+      background: #ff6ec4;
+      color: #fff;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 {
+        font-size: 2.2rem;
+      }
+      .memory-card {
+        width: 230px;
+        height: 320px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <h1>Your Memory Lane</h1>
+    <p>
+      If I had a flower for every time I thought of you, my garden would stretch to the stars ✨💖
+    </p>
+  </div>
+
+  <div class="controls">
+    <button class="btn" id="start">▶ Start Slideshow</button>
+    <button class="btn" id="pause" style="display:none">⏸ Pause</button>
+  </div>
+
+  <div class="gallery" id="gallery"></div>
+
+  <div class="nav-buttons">
+    <button class="btn" onclick="location.href='index.html'">← Back</button>
+    <button class="btn" onclick="location.href='cake.html'">✨ Next Surprise</button>
+  </div>
+
+</div>
+
+<script>
+  const memories = [
+    { img: "1.jpeg", text: "😘", rotate: "-2deg", emoji: "🌊" },
+    { img: "2.jpeg", text: "👩‍❤️‍👩", rotate: "3deg", emoji: "🌅" },
+    { img: "3.jpeg", text: "❤️", rotate: "-1deg", emoji: "🚗" },
+    { img: "4.jpeg", text: "🥰", rotate: "2deg", emoji: "🍕" },
+    { img: "5.jpeg", text: "💞", rotate: "-3deg", emoji: "🏕️" },
+    { img: "7.jpeg", text: "🎵", rotate: "1deg", emoji: "🎵" },
+    { img: "8.jpeg", text: "🏰", rotate: "-2deg", emoji: "🏰" },
+    { img: "1.jpeg", text: "🏖️", rotate: "2deg", emoji: "🏖️" },
+    { img: "2.jpeg", text: "💕", rotate: "-1deg", emoji: "💕" },
+    { img: "3.jpeg", text: "Happy Birthday 💖🎂", rotate: "3deg", emoji: "🎂" }
+  ];
+
+  const gallery = document.getElementById("gallery");
+
+  memories.forEach(m => {
+    const card = document.createElement("div");
+    card.className = "memory-card";
+    card.style.setProperty("--rotate", m.rotate);
+
+    card.innerHTML = `
+      <img src="${m.img}" class="memory-img" alt="memory">
+      <div class="memory-caption">${m.text}</div>
+      <div class="sticker">${m.emoji}</div>
+    `;
+
+    gallery.appendChild(card);
+  });
+
+  let index = 0;
+  let timer;
+
+  document.getElementById("start").onclick = () => {
+    document.getElementById("start").style.display = "none";
+    document.getElementById("pause").style.display = "inline-block";
+
+    timer = setInterval(() => {
+      const card = gallery.children[index];
+      gallery.scrollTo({
+        left: card.offsetLeft - gallery.offsetWidth / 2 + card.offsetWidth / 2,
+        behavior: "smooth"
+      });
+      index = (index + 1) % gallery.children.length;
+    }, 2000);
+  };
+
+  document.getElementById("pause").onclick = () => {
+    clearInterval(timer);
+    document.getElementById("pause").style.display = "none";
+    document.getElementById("start").style.display = "inline-block";
+  };
+</script>
+
+</body>
+</html>
